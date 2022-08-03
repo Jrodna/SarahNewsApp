@@ -1,1 +1,0 @@
-export const getTopHeadlines ( q, country, category, source)

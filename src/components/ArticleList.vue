@@ -22,12 +22,9 @@
   </div>
 </template>
 
-<!-- eslint-disable prettier/prettier -->
 <script>
-const api =
-  "https://newsapi.org/v2/everything?q=us&apiKey=d36d9da7ad2746268e11edc18bc5e445";
-// eslint-disable-next-line no-undef, no-unused-vars
 export default {
+  props: ["search", "country"],
   data() {
     return {
       articles: [],
@@ -36,21 +33,42 @@ export default {
     };
   },
   mounted() {
-    // eslint-disable-next-line no-undef
-    axios
-      .get(api)
-      .then((response) => {
-        this.articles = response.data.articles;
-      })
-      .catch((error) => {
-        console.log(error);
-        this.errored = true;
-      })
-      .finally(() => {
-        this.loading = false;
-      });
+    this.getArticles();
   },
-  methods: {},
+  methods: {
+    getArticles() {
+      const api = "https://newsapi.org/v2/top-headlines";
+      const params = {
+        apiKey: "d36d9da7ad2746268e11edc18bc5e445",
+      };
+      if (this.search) {
+        params.q = this.search;
+      }
+      if (this.country) {
+        params.country = this.country.toLowerCase();
+      }
+      this.axios
+        .get(api, { params })
+        .then((response) => {
+          this.articles = response.data.articles;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.errored = true;
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+  },
+  watch: {
+    search() {
+      this.getArticles();
+    },
+    country() {
+      this.getArticles();
+    },
+  },
 };
 </script>
 
@@ -83,4 +101,3 @@ img {
   align-items: center;
 }
 </style>
-

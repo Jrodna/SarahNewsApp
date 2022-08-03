@@ -1,14 +1,13 @@
 <!-- eslint-disable no-undef -->
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
-import HelloWorld from "./components/HelloWorld.vue";
 
 </script>
 
 <template>
   <header>
     <div class="wrapper">
-      <HelloWorld msg="That's News To Me" />
+      <h3>That's News To Me</h3>
 
       <nav class="btnHover">
         <RouterLink to="/">Home</RouterLink>
