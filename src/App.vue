@@ -1,22 +1,16 @@
+<!-- eslint-disable no-undef -->
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
 import HelloWorld from "./components/HelloWorld.vue";
+
 </script>
 
 <template>
   <header>
-    <img
-      alt="Vue logo"
-      class="logo"
-      src="@/assets/logo.svg"
-      width="125"
-      height="125"
-    />
-
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+      <HelloWorld msg="That's News To Me" />
 
-      <nav>
+      <nav class="btnHover">
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
       </nav>
@@ -26,36 +20,42 @@ import HelloWorld from "./components/HelloWorld.vue";
   <RouterView />
 </template>
 
-<style scoped>
+<script>
+// eslint-disable-next-line no-undef
+// app.mount("#app");
+</script>
+
+<style>
 header {
   line-height: 1.5;
   max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+  color: rgb(3, 30, 70);
 }
 
 nav {
   width: 100%;
-  font-size: 12px;
+  font-size: 1.5em;
   text-align: center;
   margin-top: 2rem;
 }
 
 nav a.router-link-exact-active {
-  color: var(--color-text);
+  /* color: var(--color-text); */
+  color: rgb(88, 15, 51);
+
+  /* color: #013848; */
 }
 
 nav a.router-link-exact-active:hover {
+  /* background-color: transparent; */
   background-color: transparent;
 }
 
 nav a {
   display: inline-block;
   padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
+  /* border-left: 3px solid var(--color-border); */
+  border-left: 3px solid rgb(255, 255, 255);
 }
 
 nav a:first-of-type {
