@@ -80,9 +80,11 @@ export default {
   },
   watch: {
     search() {
+      this.page = 1;
       this.getArticles();
     },
     country() {
+      this.page = 1;
       this.getArticles();
     },
     page() {
