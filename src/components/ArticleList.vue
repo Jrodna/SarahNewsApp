@@ -7,19 +7,25 @@
   </div>
   <div v-if="loading">Loading...</div>
 
-  <div class="listContainer">
-    <ul>
-      <li v-for="article in articles" :key="article.id">
-        <img v-bind:src="article.urlToImage" alt="" />
-
-        <div class="textContent">
-          <h3>{{ article.author }}</h3>
-
-          <p>{{ article.content }}</p>
-        </div>
-      </li>
-    </ul>
-  </div>
+  <v-container>
+    <v-row>
+      <v-col v-for="article in articles" :key="article.id" cols="4">
+        <v-card height="300">
+          <v-img max-height="50%" cover v-bind:src="article.urlToImage" />
+          <v-card-text>{{ article.title }}</v-card-text>
+          <v-card-subtitle>{{ article.author }}</v-card-subtitle>
+          <v-card-actions
+            ><v-btn icon="mdi-earth" :href="article.url"></v-btn
+          ></v-card-actions>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
+  <v-pagination
+    v-model="page"
+    totalVisible="5"
+    :length="Math.ceil(this.totalResults / this.pageSize)"
+  ></v-pagination>
 </template>
 
 <script>
@@ -30,6 +36,9 @@ export default {
       articles: [],
       loading: true,
       errored: false,
+      page: 1,
+      pageSize: 9,
+      totalResults: 0,
     };
   },
   mounted() {
@@ -37,9 +46,16 @@ export default {
   },
   methods: {
     getArticles() {
+      // this.articles = [
+      //   { title: "article1" },
+      //   { title: "article2", author: "author" },
+      // ];
+      // return;
       const api = "https://newsapi.org/v2/top-headlines";
       const params = {
         apiKey: "d36d9da7ad2746268e11edc18bc5e445",
+        page: this.page,
+        pageSize: this.pageSize,
       };
       if (this.search) {
         params.q = this.search;
@@ -51,6 +67,7 @@ export default {
         .get(api, { params })
         .then((response) => {
           this.articles = response.data.articles;
+          this.totalResults = response.data.totalResults;
         })
         .catch((error) => {
           console.log(error);
@@ -66,6 +83,9 @@ export default {
       this.getArticles();
     },
     country() {
+      this.getArticles();
+    },
+    page() {
       this.getArticles();
     },
   },
